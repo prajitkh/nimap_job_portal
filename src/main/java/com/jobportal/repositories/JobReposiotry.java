@@ -15,6 +15,8 @@ public interface JobReposiotry extends JpaRepository<JobEntity, Long> {
 
 	Page<IListJobDto> findByJobTitleContainingIgnoreCase(String search, Pageable pageable, Class<IListJobDto> class1);
 
+	JobEntity findByCreatedBy(Long userId);
+
 	// Page<IJobListDto> findByOrderByIdAsc(Pageable pageable, Class<IJobListDto>
 	// class1);
 

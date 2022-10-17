@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -18,6 +19,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "job")
+
+//@NamedNativeQuery(name = "findUserEmail", query = "select u.id as  user_id,u.email ,uu.created_by from users u inner join job uu on u.id=uu.created_by", resultClass = JobEntity.class)
 public class JobEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,6 +45,12 @@ public class JobEntity {
 	@Column(name = "updated_at")
 	@UpdateTimestamp
 	private Date updatedAt;
+
+	@JoinColumn(name = "created_by")
+	private Long createdBy;
+
+	@JoinColumn(name = "updated_by")
+	private Long updatedBy;
 
 	public Long getId() {
 		return id;
@@ -118,6 +127,30 @@ public class JobEntity {
 	public JobEntity() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public Long getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(Long createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Long getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(Long updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public List<UserJob> getUserJobs() {
+		return userJobs;
+	}
+
+	public void setUserJobs(List<UserJob> userJobs) {
+		this.userJobs = userJobs;
 	}
 
 }

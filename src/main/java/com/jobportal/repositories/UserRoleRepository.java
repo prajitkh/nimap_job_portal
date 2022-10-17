@@ -8,4 +8,6 @@ public interface UserRoleRepository extends JpaRepository<UserRoleEntity, Long> 
 
 	UserRoleEntity findByUserIdAndRoleId(Long userId, Long roleId);
 
+	UserRoleEntity findByRoleId(Long roleId);
+
 }

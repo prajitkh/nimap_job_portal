@@ -34,7 +34,6 @@ import com.jobportal.serviceInterface.AuthInterface;
 import com.jobportal.serviceInterface.EmailServiceInterface;
 import com.jobportal.serviceInterface.JwtTokenUtilInterface;
 import com.jobportal.serviceInterface.LoggerInterface;
-import com.jobportal.serviceInterface.OtpInterface;
 import com.jobportal.utils.PasswordValidator;
 
 @RestController
@@ -55,8 +54,6 @@ public class AuthController {
 	EmailServiceInterface emailServiceInterface;
 	@Autowired
 	private OTPRepository otpRepository;
-	@Autowired
-	private OtpInterface otpInterface;
 
 	@PostMapping("/register")
 	public ResponseEntity<?> createUser(@Valid @RequestBody UserDto userDto, HttpServletRequest request)
@@ -65,31 +62,38 @@ public class AuthController {
 		String email = userDto.getEmail();
 		String password = userDto.getPassword();
 
-		if (PasswordValidator.isValid(password)) {
+		if (PasswordValidator.isValidforEmail(email)) {
 
-			UserEntity databaseName = authRepository.findByEmailContainingIgnoreCase(email);
+			if (PasswordValidator.isValid(password)) {
 
-			if (databaseName == null) {
+				UserEntity databaseName = authRepository.findByEmailContainingIgnoreCase(email);
 
-				authInterface.AddUser(userDto);
+				if (databaseName == null) {
 
-				return new ResponseEntity<>(new SuccessResponseDto("User created", "userCreated", "Data added"),
-						HttpStatus.CREATED);
-			} else {
-				return new ResponseEntity<>(
-						new ErrorResponseDto("User email id already exist", "userEmailIdAlreadyExist"),
-						HttpStatus.BAD_REQUEST);
+					authInterface.AddUser(userDto);
+
+					return new ResponseEntity<>(new SuccessResponseDto("User created", "userCreated", "Data added"),
+							HttpStatus.CREATED);
+				} else {
+					return new ResponseEntity<>(
+							new ErrorResponseDto("User email id already exist", "userEmailIdAlreadyExist"),
+							HttpStatus.BAD_REQUEST);
+				}
 			}
+
+			else {
+
+				return new ResponseEntity<>(new ErrorResponseDto(
+						"Password should have Minimum 8 and maximum 50 characters, at least one uppercase letter, one lowercase letter, one number and one special character and no white spaces",
+						"Password validation not done"), HttpStatus.BAD_REQUEST);
+
+			}
+
+		} else {
+
+			return new ResponseEntity<>(new ErrorResponseDto("Enter vaild email", "Email not valid"),
+					HttpStatus.BAD_REQUEST);
 		}
-
-		else {
-
-			return new ResponseEntity<>(new ErrorResponseDto(
-					"Password should have Minimum 8 and maximum 50 characters, at least one uppercase letter, one lowercase letter, one number and one special character and no white spaces",
-					"Password validation not done"), HttpStatus.BAD_REQUEST);
-
-		}
-
 	}
 
 	@PostMapping("/login")

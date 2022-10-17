@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +17,7 @@ import com.jobportal.dto.IListJobDto;
 import com.jobportal.dto.JobDto;
 import com.jobportal.dto.SuccessResponseDto;
 import com.jobportal.serviceInterface.JobInterface;
+import com.jobportal.utils.CommanFuncation;
 
 @RestController
 @RequestMapping("/jobs")
@@ -24,10 +26,11 @@ public class JobController {
 	private JobInterface jobInterface;
 
 	@PostMapping()
-	public ResponseEntity<?> addJobs(@RequestBody JobDto jobDto) {
+	public ResponseEntity<?> addJobs(@RequestAttribute(CommanFuncation.CUSTUM_ATTRIBUTE_USER_ID) Long id,
+			@RequestBody JobDto jobDto) {
 		try {
 
-			this.jobInterface.addJobs(jobDto);
+			this.jobInterface.addJobs(id, jobDto);
 
 			return new ResponseEntity<>(new SuccessResponseDto("job added succefully", "Success", jobDto),
 					HttpStatus.OK);

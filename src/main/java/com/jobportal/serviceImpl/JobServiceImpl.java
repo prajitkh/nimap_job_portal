@@ -1,5 +1,10 @@
 package com.jobportal.serviceImpl;
 
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,13 +21,16 @@ import com.jobportal.utils.Pagination;
 public class JobServiceImpl implements JobInterface {
 	@Autowired
 	private JobReposiotry jobReposiotry;
+	@PersistenceContext
+	private EntityManager manager;
 
 	@Override
-	public void addJobs(JobDto jobDto) {
+	public void addJobs(Long id, JobDto jobDto) {
 		System.err.println(1);
 		JobEntity jobEntity = new JobEntity();
 		jobEntity.setJobTitle(jobDto.getJobTitle());
 		jobEntity.setDescription(jobDto.getDescription());
+		jobEntity.setCreatedBy(id);
 		this.jobReposiotry.save(jobEntity);
 
 	}
@@ -44,4 +52,8 @@ public class JobServiceImpl implements JobInterface {
 		return iJobListDto;
 	}
 
+	public List<JobEntity> getAllUserEmail() {
+		List<JobEntity> employees = manager.createNamedQuery("findUserEmail", JobEntity.class).getResultList();
+		return employees;
+	}
 }

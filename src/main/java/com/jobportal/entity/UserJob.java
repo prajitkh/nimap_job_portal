@@ -10,6 +10,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "user_job")
+//@NamedQuery(name = "UserJob.findAllUsers", query = "select u.id as  user_id,u.email ,uu.created_by  as creates from users u inner join job uu on u.id=uu.created_by ")
+
 public class UserJob {
 
 	@Id

@@ -9,8 +9,8 @@ import com.jobportal.dto.JobDto;
 @Service
 public interface JobInterface {
 
-	void addJobs(JobDto jobDto);
-
 	Page<IListJobDto> getAllJobs(String search, String pagNumber, String pageSize);
+
+	void addJobs(Long id, JobDto jobDto);
 
 }
