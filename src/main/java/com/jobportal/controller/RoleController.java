@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +33,7 @@ public class RoleController {
 	@Autowired
 	private RoleInterface roleInterface;
 
+	@PreAuthorize("hasRole('addRoles')")
 	@PostMapping()
 	public ResponseEntity<?> addRoles(@RequestBody RoleDto roleDto) {
 
@@ -51,6 +53,7 @@ public class RoleController {
 		}
 	}
 
+	@PreAuthorize("hasRole('getRoleById')")
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getRoleById(@PathVariable Long id) {
 		try {
@@ -66,6 +69,7 @@ public class RoleController {
 
 	}
 
+	@PreAuthorize("hasRole('getAllRoles')")
 	@GetMapping()
 	public ResponseEntity<?> getAllRoles(@RequestParam(defaultValue = "") String search,
 			@RequestParam(defaultValue = "1") String pageNo, @RequestParam(defaultValue = "5") String PageSize) {
@@ -81,6 +85,7 @@ public class RoleController {
 		return new ResponseEntity<>(new ErrorResponseDto("Data Not Found", "Data Not Found"), HttpStatus.NOT_FOUND);
 	}
 
+	@PreAuthorize("hasRole('updateRole')")
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateRole(@RequestBody RoleDto roleDto, @PathVariable long id) {
 		try {
@@ -94,6 +99,7 @@ public class RoleController {
 
 	}
 
+	@PreAuthorize("hasRole('deleteRole')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteRole(@PathVariable(name = "id") Long id) throws ResourceNotFoundException {
 		try {

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ public class PermissionController {
 	@Autowired
 	private PermissionInterface permissionInterface;
 
+//	@PreAuthorize("hasRole('addPermission')")
 	@PostMapping()
 	public ResponseEntity<?> addPermission(@RequestBody PermissionRequestDto permissionDto) {
 
@@ -46,6 +48,7 @@ public class PermissionController {
 
 	}
 
+	@PreAuthorize("hasRole('updatePermission')")
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updatePermission(@RequestBody PermissionRequestDto permissionDto, @PathVariable long a) {
 		try {
@@ -59,6 +62,7 @@ public class PermissionController {
 		}
 	}
 
+	@PreAuthorize("hasRole('deletePermission')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deletePermission(@PathVariable(name = "id") Long id) throws ResourceNotFoundException {
 		try {
@@ -70,6 +74,7 @@ public class PermissionController {
 		}
 	}
 
+	@PreAuthorize("hasRole('getPermissionById')")
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getPermissionById(@PathVariable Long id) {
 		try {
@@ -84,6 +89,7 @@ public class PermissionController {
 		}
 	}
 
+	@PreAuthorize("hasRole('getAllPermission')")
 	@GetMapping()
 	public ResponseEntity<?> getAllPermission(@RequestParam(defaultValue = "") String search,
 			@RequestParam(defaultValue = "1") String pageNo, @RequestParam(defaultValue = "5") String PageSize) {

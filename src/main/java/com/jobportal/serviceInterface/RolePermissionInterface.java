@@ -1,11 +1,23 @@
 package com.jobportal.serviceInterface;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import com.jobportal.dto.IListRolePermission;
 import com.jobportal.dto.RolePermissionDto;
 
 @Service
 public interface RolePermissionInterface {
 	public RolePermissionDto addRolePermission(RolePermissionDto rolePermissionDto);
+
+	public RolePermissionDto updateRoleOrPermission(Long id, RolePermissionDto rolePermissionDto);
+
+	public void deleteRolePermission(Long id);
+
+	public List<IListRolePermission> getRolePermissionById(Long id);
+
+	Page<IListRolePermission> getAllRolePermission(String search, String pageNumber, String pageSize);
 
 }

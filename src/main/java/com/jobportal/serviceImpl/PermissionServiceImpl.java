@@ -6,15 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jobportal.dto.IListPermissionDto;
 import com.jobportal.dto.PermissionRequestDto;
 import com.jobportal.entity.PermissionEntity;
+import com.jobportal.entity.RoleEntity;
+import com.jobportal.entity.RolePermissionEntity;
 import com.jobportal.excetpion.ResourceNotFoundException;
 import com.jobportal.repositories.PermissionRepository;
+import com.jobportal.repositories.RolePermissionRepository;
 import com.jobportal.repositories.RoleRepository;
 import com.jobportal.serviceInterface.PermissionInterface;
 import com.jobportal.utils.Pagination;
+
+
 
 @Service
 public class PermissionServiceImpl implements PermissionInterface {
@@ -24,6 +30,9 @@ public class PermissionServiceImpl implements PermissionInterface {
 
 	@Autowired
 	RoleRepository roleRepository;
+	
+	@Autowired
+	private RolePermissionRepository rolePermissionRepository;
 
 	// add permission
 	@Override
@@ -89,6 +98,42 @@ public class PermissionServiceImpl implements PermissionInterface {
 		List<IListPermissionDto> iListPermissionDtos = this.permissionRepository
 				.findByOrderByIdDesc(IListPermissionDto.class);
 		return iListPermissionDtos;
+	}
+
+	@Override
+	public void saveExcelFile(MultipartFile multipartFile) {
+	
+			try {
+
+				XSSFWorkbook workbook = new XSSFWorkbook(multipartFile.getInputStream());
+				XSSFSheet worksheet = workbook.getSheetAt(0);
+				System.out.println(worksheet.getPhysicalNumberOfRows());
+				for (int i = 1; i < worksheet.getPhysicalNumberOfRows() - 1; i++) {
+					XSSFRow row = worksheet.getRow(i);
+					PermissionEntity entity = new PermissionEntity();
+
+					entity.setActionName(row.getCell(0).getStringCellValue());
+					entity.setDescription((row.getCell(1).getStringCellValue()));
+					entity.setMethod((row.getCell(2).getStringCellValue()));
+					entity.setBaseUrl((row.getCell(3).getStringCellValue()));
+
+					this.permissionRepository.save(entity);
+
+					RolePermissionEntity permissionEntity2 = new RolePermissionEntity();
+					Long roleId = (long) row.getCell(5).getNumericCellValue();
+					RoleEntity roleEntity = this.roleRepository.findById(roleId).get();
+
+				
+					this.rolePermissionRepository.save(permissionEntity2);
+		
+				}
+
+			} catch (Exception e) {
+
+				throw new RuntimeException("fail to store excel data: " + e.getMessage());
+			}
+
+		}
 	}
 
 }

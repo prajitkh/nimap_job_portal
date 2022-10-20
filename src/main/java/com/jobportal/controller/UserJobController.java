@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -27,6 +28,7 @@ public class UserJobController {
 	@Autowired
 	private UserJobInterface userJobInterface;
 
+	@PreAuthorize("hasRole('applyMultipleJobs')")
 	@PostMapping
 	public ResponseEntity<?> applyMultipleJobs(@RequestAttribute(CommanFuncation.CUSTUM_ATTRIBUTE_USER_ID) Long userId,
 			@RequestBody UserJobDto userJobDto) throws Exception {
@@ -43,6 +45,7 @@ public class UserJobController {
 	}
 
 // See a list of jobs they have applied
+	@PreAuthorize("hasRole('getAppliedJobList')")
 	@GetMapping("/userId")
 	public ResponseEntity<?> getAppliedJobList(@RequestAttribute(CommanFuncation.CUSTUM_ATTRIBUTE_USER_ID) Long userId,
 			@RequestParam(defaultValue = "1") String pageNo, @RequestParam(defaultValue = "25") String pageSize) {
@@ -55,6 +58,7 @@ public class UserJobController {
 	}
 
 //View jobs applied only to the specific jobs posted by the recruite
+	@PreAuthorize("hasRole('getUserAppliedJobList')")
 	@GetMapping("/reqId")
 	public ResponseEntity<?> getUserAppliedJobList(
 			@RequestAttribute(CommanFuncation.CUSTUM_ATTRIBUTE_USER_ID) Long userId,
@@ -67,6 +71,7 @@ public class UserJobController {
 
 	}
 
+	@PreAuthorize("hasRole('getUserJobs')")
 	@GetMapping()
 	public ResponseEntity<?> getUserJobs(@RequestAttribute(CommanFuncation.CUSTUM_ATTRIBUTE_USER_ID) Long userId,
 			@RequestParam(defaultValue = "1") String PageNo, @RequestParam(defaultValue = "5") String PageSize) {
