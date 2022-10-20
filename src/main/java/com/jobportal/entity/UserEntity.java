@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "users")
 @Where(clause = "is_active=true")
-@SQLDelete(sql = "UPDATE UserEntity SET is_active=false WHERE id=?")
+@SQLDelete(sql = "UPDATE users SET is_active=false WHERE id=?")
 public class UserEntity {
 	@Id
 	@Column(name = "id")

@@ -15,7 +15,4 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
 	UserEntity findByEmail(String emailString);
 
-	// Page<IUserJobList> findByUserIdOrderByDesc(Long id, Pageable pageable,
-	// Class<IListUserDto> class1);
-
 }

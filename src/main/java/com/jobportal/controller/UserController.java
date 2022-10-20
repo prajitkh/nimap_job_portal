@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,6 +45,19 @@ public class UserController {
 		Page<IListUserDto> iListUserDto = this.userInterface.getAllUsers(search, PageNo, PageSize);
 		return new ResponseEntity<>(new SuccessResponseDto("All users", "success", iListUserDto.getContent()),
 				HttpStatus.OK);
+
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteUserById(@PathVariable Long id) {
+		try {
+			userInterface.deleteUser(id);
+			return new ResponseEntity<>(new SuccessResponseDto("User deleted succefully", "Deleted"), HttpStatus.OK);
+
+		} catch (Exception e) {
+			return new ResponseEntity<>(new ErrorResponseDto(e.getMessage(), "Please enter valid user id"),
+					HttpStatus.BAD_REQUEST);
+		}
 
 	}
 

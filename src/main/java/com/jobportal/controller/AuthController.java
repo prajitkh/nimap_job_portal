@@ -39,6 +39,7 @@ import com.jobportal.utils.PasswordValidator;
 @RestController
 public class AuthController {
 	private static final Logger LOG = LoggerFactory.getLogger(AuthController.class);
+
 	@Autowired
 	private JwtTokenUtilInterface jwtTokenUtilInterface;
 	@Autowired
@@ -197,4 +198,5 @@ public class AuthController {
 			return new ResponseEntity<>(new ErrorResponseDto(e.getMessage(), "Not found"), HttpStatus.BAD_REQUEST);
 		}
 	}
+
 }

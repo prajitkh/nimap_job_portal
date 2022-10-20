@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,7 +38,7 @@ public class JobController {
 					HttpStatus.OK);
 
 		} catch (Exception e) {
-			return new ResponseEntity<>(new ErrorResponseDto(e.getMessage(), "Please enter valid job data"),
+			return new ResponseEntity<>(new ErrorResponseDto(e.getMessage(), "Please enter valid job information"),
 					HttpStatus.BAD_REQUEST);
 		}
 
@@ -53,4 +55,18 @@ public class JobController {
 
 	}
 
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteJobById(@PathVariable Long id) {
+		try {
+
+			this.jobInterface.deleteJob(id);
+
+			return new ResponseEntity<>(new SuccessResponseDto("Job deleted succefully", "Deleted"), HttpStatus.OK);
+
+		} catch (Exception e) {
+			return new ResponseEntity<>(new ErrorResponseDto(e.getMessage(), "Please enter valid job id"),
+					HttpStatus.BAD_REQUEST);
+		}
+
+	}
 }

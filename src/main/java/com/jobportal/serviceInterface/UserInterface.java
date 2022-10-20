@@ -13,4 +13,5 @@ public interface UserInterface {
 
 	Page<IListUserDto> getAllUsers(String search, String pageNo, String PageSize);
 
+	void deleteUser(Long id) throws Exception;
 }

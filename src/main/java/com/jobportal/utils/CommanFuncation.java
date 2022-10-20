@@ -1,7 +1,5 @@
 package com.jobportal.utils;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,46 +34,16 @@ public class CommanFuncation implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 
-//		String authHeader = request.getHeader("Authorization");
-//
-//		String token = authHeader.substring(7);
-//
-//		final String emailString = tokenUtilInterface.getUsernameFromToken(token);
-//
-//		UserEntity userEntity = userRepository.findByEmail(emailString);
-//		request.setAttribute("X-user-id", userEntity.getId());
-//		return HandlerInterceptor.super.preHandle(request, response, handler);
-
 		String authHeader = request.getHeader("Authorization");
 		String tokenString = (null != authHeader) ? authHeader.split(" ")[1] : null;
-
-		// ArrayList<String> urlsWithoutHeader = new
-		// ArrayList<>(Arrays.asList(ApiUrls.URLS_WITHOUT_HEADER));
-		final String requestUrl = request.getRequestURI();
-
-		// if (!urlsWithoutHeader.contains(requestUrl)) {
 
 		if (null != tokenString) {
 			final String emailString = tokenUtilInterface.getUsernameFromToken(tokenString);
 
 			UserEntity userEntity = userRepository.findByEmail(emailString);
 
-			if (null != userEntity) {
-				// ArrayList<com.jobportal.entity.UserRoleEntity> userRoleEntity =
-				// userRoleRepository.getRolesOfUser(userEntity.getId());
-
-				ArrayList<String> roles = new ArrayList<>();
-//
-//					for (int i = 0; i < userRoleEntity.size(); i++) {
-//						roles.add(userRoleEntity.get(i).getRole().getRoleName();
-//					}
-
-				request.setAttribute("X-user-roles", roles);
-				request.setAttribute("X-user-id", userEntity.getId());
-			}
-
+			request.setAttribute("X-user-id", userEntity.getId());
 		}
-		// }
 
 		return HandlerInterceptor.super.preHandle(request, response, handler);
 	}

@@ -3,12 +3,10 @@ package com.jobportal.serviceImpl;
 import java.util.Calendar;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.jobportal.entity.UserEntity;
@@ -25,13 +23,6 @@ public class EmailServiceImpl implements EmailServiceInterface {
 
 	@Override
 	public String sendSimpleMessage(String emailTo, String subject, String text) throws MessagingException {
-		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-		MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
-//		mimeMessageHelper.setFrom("noreplayntts@gmail.com");
-//		mimeMessageHelper.setTo(emailTo);
-//		mimeMessageHelper.setSubject(subject);
-//		mimeMessageHelper.setText(text, true);
-//		javaMailSender.send(mimeMessage);
 
 		try {
 

@@ -8,9 +8,13 @@ import com.jobportal.dto.UserJobDto;
 
 @Service
 public interface UserJobInterface {
-//	List<IUserJobList> getUsersJobs(Long user_id);
-
-	Page<IUserJobList> getUsersJobs(Long id, String pageNo, String pageSize);
 
 	void applyJobs(Long id, UserJobDto userJobDto) throws Exception;
+
+	Page<IUserJobList> getCandidateAppliedJobList(Long userId, String search, String pageNo, String pageSize);
+
+	Page<IUserJobList> getUsersAppliedJobList(Long jobId, String pageNumber, String pageSize);
+
+	Page<IUserJobList> getUsersJobs(Long jobId, String pageNumber, String pageSize);
+
 }

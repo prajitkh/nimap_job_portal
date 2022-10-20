@@ -15,11 +15,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "job")
-
+@Where(clause = "is_active=true")
+@SQLDelete(sql = "UPDATE job SET is_active=false WHERE id=?")
 //@NamedNativeQuery(name = "findUserEmail", query = "select u.id as  user_id,u.email ,uu.created_by from users u inner join job uu on u.id=uu.created_by", resultClass = JobEntity.class)
 public class JobEntity {
 	@Id

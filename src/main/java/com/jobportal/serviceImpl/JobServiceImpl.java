@@ -56,4 +56,10 @@ public class JobServiceImpl implements JobInterface {
 		List<JobEntity> employees = manager.createNamedQuery("findUserEmail", JobEntity.class).getResultList();
 		return employees;
 	}
+
+	@Override
+	public void deleteJob(Long id) throws Exception {
+		JobEntity jobEntity = this.jobReposiotry.findById(id).orElseThrow(() -> new Exception("job id not found"));
+		this.jobReposiotry.delete(jobEntity);
+	}
 }

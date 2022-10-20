@@ -6,7 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.jobportal.dto.Email;
-import com.jobportal.dto.IListUserDto;
 import com.jobportal.dto.IUserJobList;
 import com.jobportal.dto.UserJobDto;
 import com.jobportal.entity.JobEntity;
@@ -16,7 +15,6 @@ import com.jobportal.excetpion.ResourceNotFoundException;
 import com.jobportal.repositories.JobReposiotry;
 import com.jobportal.repositories.UserJobRepository;
 import com.jobportal.repositories.UserRepository;
-import com.jobportal.repositories.UserRoleRepository;
 import com.jobportal.serviceInterface.EmailServiceInterface;
 import com.jobportal.serviceInterface.UserJobInterface;
 import com.jobportal.utils.Pagination;
@@ -28,19 +26,12 @@ public class UserJobServiceImpl implements UserJobInterface {
 	private UserRepository userRepository;
 
 	@Autowired
-	private UserJobInterface userJobInterface;
-	@Autowired
 	private EmailServiceInterface emailServiceInterface;
 
 	@Autowired
 	private UserJobRepository userJobRepository;
 	@Autowired
 	private JobReposiotry jobReposiotry;
-
-	@Autowired
-	private EmailServiceImpl emailServiceImpl;
-	@Autowired
-	private UserRoleRepository userRoleRepository;
 
 	@Override
 	public void applyJobs(Long id, UserJobDto userJobDto) throws Exception {
@@ -80,15 +71,37 @@ public class UserJobServiceImpl implements UserJobInterface {
 	}
 
 	@Override
-	public Page<IUserJobList> getUsersJobs(Long id, String pageNo, String pageSize) {
-		Page<IUserJobList> iUserJobList;
+	public Page<IUserJobList> getCandidateAppliedJobList(Long userId, String search, String pageNo, String pageSize) {
+
+		Page<IUserJobList> page;
+
 		Pageable pageable = new Pagination().getPagination(pageNo, pageSize);
 
-		if (id == null) {
-			iUserJobList = this.userJobRepository.findByOrderByIdDesc(pageable, IUserJobList.class);
-		} else {
-			iUserJobList = this.userJobRepository.findByUserId(id, pageable, IListUserDto.class);
-		}
+		page = userJobRepository.findJobIdByUserIdOrderByIdDesc(userId, pageable, IUserJobList.class);
+
+		return page;
+	}
+
+//View jobs applied only to the specific jobs posted by the recruiter
+	@Override
+	public Page<IUserJobList> getUsersAppliedJobList(Long jobId, String pageNumber, String pageSize) {
+		Page<IUserJobList> iUserJobList;
+
+		Pageable pageable = new Pagination().getPagination(pageNumber, pageSize);
+		// iUserJobList = this.userJobRepository.findByOrderByIdDesc(pageable,
+		// IUserJobList.class);
+		iUserJobList = userJobRepository.findByJobIdOrderByIdDesc(jobId, pageable, IUserJobList.class);
+
 		return iUserJobList;
 	}
+
+	@Override
+	public Page<IUserJobList> getUsersJobs(Long jobId, String pageNumber, String pageSize) {
+		Page<IUserJobList> iUserJobList;
+
+		Pageable pageable = new Pagination().getPagination(pageNumber, pageSize);
+		iUserJobList = this.userJobRepository.findByOrderByIdDesc(pageable, IUserJobList.class);
+		return iUserJobList;
+	}
+
 }

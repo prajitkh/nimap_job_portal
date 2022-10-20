@@ -41,4 +41,11 @@ public class UserServiceImpl implements UserInterface {
 		return page;
 	}
 
+	@Override
+	public void deleteUser(Long id) throws Exception {
+
+		UserEntity userEntity = this.userRepository.findById(id).orElseThrow(() -> new Exception("user id not found"));
+		this.userRepository.delete(userEntity);
+	}
+
 }

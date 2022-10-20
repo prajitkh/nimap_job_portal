@@ -13,4 +13,5 @@ public interface JobInterface {
 
 	void addJobs(Long id, JobDto jobDto);
 
+	void deleteJob(Long id) throws Exception;
 }
