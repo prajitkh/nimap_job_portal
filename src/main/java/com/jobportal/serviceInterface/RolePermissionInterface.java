@@ -1,5 +1,6 @@
 package com.jobportal.serviceInterface;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -19,5 +20,7 @@ public interface RolePermissionInterface {
 	public List<IListRolePermission> getRolePermissionById(Long id);
 
 	Page<IListRolePermission> getAllRolePermission(String search, String pageNumber, String pageSize);
+
+	public ArrayList<String> getPermissionByUserId(Long id);
 
 }

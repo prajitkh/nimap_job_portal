@@ -3,7 +3,6 @@ package com.jobportal.serviceInterface;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.jobportal.dto.IListPermissionDto;
 import com.jobportal.dto.PermissionRequestDto;
@@ -22,7 +21,5 @@ public interface PermissionInterface {
 	public PermissionRequestDto updatePermission(PermissionRequestDto dto, Long id) throws ResourceNotFoundException;
 
 	public List<IListPermissionDto> getAllPermissions();
-
-	public void saveExcelFile(MultipartFile multipartFile);
 
 }

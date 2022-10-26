@@ -17,6 +17,7 @@ import com.jobportal.excetpion.ResourceNotFoundException;
 import com.jobportal.repositories.PermissionRepository;
 import com.jobportal.repositories.RolePermissionRepository;
 import com.jobportal.repositories.RoleRepository;
+import com.jobportal.repositories.UserRoleRepository;
 import com.jobportal.serviceInterface.RolePermissionInterface;
 import com.jobportal.utils.Pagination;
 
@@ -30,6 +31,8 @@ public class RolePermissionServiceImpl implements RolePermissionInterface {
 
 	@Autowired
 	private PermissionRepository permissionRepository;
+	@Autowired
+	private UserRoleRepository userRoleRepository;
 
 	@Override
 	public RolePermissionDto addRolePermission(RolePermissionDto rolePermissionDto) {
@@ -101,4 +104,11 @@ public class RolePermissionServiceImpl implements RolePermissionInterface {
 
 		return iListRolePermission;
 	}
+
+	@Override
+	public ArrayList<String> getPermissionByUserId(Long id) {
+
+		return null;
+	}
+
 }

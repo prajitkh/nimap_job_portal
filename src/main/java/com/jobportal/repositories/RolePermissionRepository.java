@@ -26,4 +26,5 @@ public interface RolePermissionRepository extends JpaRepository<RolePermissionEn
 	List<IListRolePermission> findById(Long id, Class<IListRolePermission> class1);
 
 	Page<IListRolePermission> findByOrderByIdAsc(Pageable paging, Class<IListRolePermission> class1);
+
 }
