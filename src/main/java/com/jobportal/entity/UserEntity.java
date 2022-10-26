@@ -168,4 +168,10 @@ public class UserEntity {
 		super();
 	}
 
+	@Override
+	public String toString() {
+		return "{\"id\":" + id + ",\"name\":\"" + name + "\",\"email\":\"" + email + "\",\"password\":\"" + password
+				+ "\"}";
+	}
+
 }
