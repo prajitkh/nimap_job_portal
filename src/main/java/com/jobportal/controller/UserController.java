@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jobportal.dto.ErrorResponseDto;
 import com.jobportal.dto.IListUserDto;
@@ -61,7 +63,17 @@ public class UserController {
 			return new ResponseEntity<>(new ErrorResponseDto(e.getMessage(), "Please enter valid user id"),
 					HttpStatus.BAD_REQUEST);
 		}
-
 	}
 
+	@PostMapping("/upload")
+	public ResponseEntity<?> uploadUser(MultipartFile file) {
+		try {
+			userInterface.useBulkUpload(file);
+			return new ResponseEntity<>(new SuccessResponseDto("User uplaod succefully", "o"), HttpStatus.OK);
+
+		} catch (Exception e) {
+			return new ResponseEntity<>(new ErrorResponseDto(e.getMessage(), "Please enter valid inforamtion"),
+					HttpStatus.BAD_REQUEST);
+		}
+	}
 }

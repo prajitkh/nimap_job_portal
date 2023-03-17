@@ -2,6 +2,7 @@ package com.jobportal.serviceInterface;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jobportal.dto.IListUserDto;
 import com.jobportal.dto.UserPersonalInfoDto;
@@ -14,4 +15,6 @@ public interface UserInterface {
 	Page<IListUserDto> getAllUsers(String search, String pageNo, String PageSize);
 
 	void deleteUser(Long id) throws Exception;
+
+	void useBulkUpload(MultipartFile file) throws Exception;
 }

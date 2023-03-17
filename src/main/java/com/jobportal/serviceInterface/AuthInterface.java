@@ -1,5 +1,7 @@
 package com.jobportal.serviceInterface;
 
+import java.util.ArrayList;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -19,4 +21,6 @@ public interface AuthInterface {
 
 	boolean forgotPasswordConfirm(ForgotPasswordConfirmDto passwordConfirmDto, UserEntity userEntity,
 			OtpEntity otpEntity) throws Exception;
+
+	ArrayList<String> getUserPermission(Long id);
 }

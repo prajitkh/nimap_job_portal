@@ -108,7 +108,7 @@ public class RolePermissionServiceImpl implements RolePermissionInterface {
 	@Override
 	public ArrayList<String> getPermissionByUserId(Long id) {
 
-		return null;
+		return this.permissionRepository.findbyUserIdPermission(id);
 	}
 
 }

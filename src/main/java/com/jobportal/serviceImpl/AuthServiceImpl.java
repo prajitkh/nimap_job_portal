@@ -123,4 +123,17 @@ public class AuthServiceImpl implements AuthInterface, UserDetailsService {
 		});
 		return authorities;
 	}
+
+	@Override
+	public ArrayList<String> getUserPermission(Long id) {
+		ArrayList<String> permissions;
+		if (!cache.isKeyExist(id + "permission", id + "permission")) {
+			permissions = this.rolePermissionInterface.getPermissionByUserId(id);
+			cache.addInCache(id + "permission", id + "permission", permissions);
+		} else {
+			permissions = (ArrayList<String>) cache.getFromCache(id + "permission", id + "permission");
+		}
+		return permissions;
+
+	}
 }

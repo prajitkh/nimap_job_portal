@@ -1,5 +1,7 @@
 package com.jobportal.configuration;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +18,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -29,6 +34,8 @@ import com.jobportal.serviceImpl.AuthServiceImpl;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
+	public static final String[] SWAGGER_URLS = { "/v3/api-docs", "/v2/api-docs", "/swagger-resources/**",
+			"/swagger-ui/**", "/webjars/**", "/api/swagger-ui/index.html" };
 	@Autowired
 	private JwtAuthenticationEntryPoint authenticationEntryPoint;
 
@@ -53,7 +60,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 				// dont authenticate this particular request
 				.authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 				.antMatchers("/register", "/login", "/forgot-password", "/forgot-password-confirm").permitAll()
-				.anyRequest().authenticated().and().httpBasic().and().
+				.antMatchers(WebSecurity.SWAGGER_URLS).permitAll().anyRequest().authenticated().and().httpBasic().and().
 				// make sure we use stateless session; session won't be used to
 				// store user's state.
 				exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and().sessionManagement()
@@ -106,6 +113,20 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
 		auth.authenticationProvider(authenticationProvider());
+
+	}
+
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(Arrays.asList("*"));
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+		configuration.setAllowedHeaders(
+				Arrays.asList("authorization", "content-type", "x-auth-token", "lang", "x-token", "ip-address"));
+		configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
 
 	}
 
