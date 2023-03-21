@@ -1,5 +1,6 @@
 package com.jobportal.controller;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,7 +60,7 @@ public class AuthController {
 	@PostMapping("/register")
 	public ResponseEntity<?> createUser(@Valid @RequestBody UserDto userDto, HttpServletRequest request)
 			throws Exception, DataIntegrityViolationException {
-
+		System.err.println("**********************register******************************");
 		String email = userDto.getEmail();
 		String password = userDto.getPassword();
 
@@ -101,7 +102,7 @@ public class AuthController {
 	public ResponseEntity<?> createAuthenticationToken(@Valid @RequestBody JwtRequest createAuthenticationToken)
 			throws Exception {
 		try {
-
+			System.err.println("Login request ***********************************************");
 			UserEntity user = authRepository.findByEmailContainingIgnoreCase(createAuthenticationToken.getEmail());
 
 			if (this.authInterface.comparePassword(createAuthenticationToken.getPassword(), user.getPassword())) {
@@ -113,8 +114,7 @@ public class AuthController {
 
 				final String token = this.jwtTokenUtilInterface.generateToken(userDetails);
 
-				// ArrayList<String> permissions =
-				// authInterface.getUserPermission(user.getId());
+				ArrayList<String> permissions = authInterface.getUserPermission(user.getId());
 
 				LoggerDto loggerDto = new LoggerDto();
 
@@ -145,7 +145,7 @@ public class AuthController {
 		}
 	}
 
-////forgot password 
+////forgot password
 	@PostMapping("/forgot-password")
 	public ResponseEntity<?> forgotPassword(@RequestBody EmailOtpDto emailOtpDto) {
 		try {
