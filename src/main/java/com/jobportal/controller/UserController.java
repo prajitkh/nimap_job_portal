@@ -1,5 +1,9 @@
 package com.jobportal.controller;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -76,4 +80,15 @@ public class UserController {
 					HttpStatus.BAD_REQUEST);
 		}
 	}
+
+	@GetMapping("/export")
+	public void exportToExcel(HttpServletResponse response) throws IOException {
+		response.setContentType("application/vnd.ms-excel");
+		String headerKey = "Content-Disposition";
+		String headerValue = "attachment; filename=Users_Information.xlsx";
+		response.setHeader(headerKey, headerValue);
+
+		userInterface.exportUserToExcel(response);
+	}
+
 }

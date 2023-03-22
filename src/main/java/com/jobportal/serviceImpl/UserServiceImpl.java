@@ -1,7 +1,10 @@
 package com.jobportal.serviceImpl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -21,6 +24,7 @@ import com.jobportal.entity.UserEntity;
 import com.jobportal.excetpion.ResourceNotFoundException;
 import com.jobportal.repositories.UserRepository;
 import com.jobportal.serviceInterface.UserInterface;
+import com.jobportal.utils.ExcelExportUtils;
 import com.jobportal.utils.Pagination;
 
 @Service
@@ -151,6 +155,15 @@ public class UserServiceImpl implements UserInterface {
 		}
 		System.err.println("dfgh");
 		this.userRepository.saveAll(arrayList);
+
+	}
+
+	@Override
+	public List<IListUserDto> exportUserToExcel(HttpServletResponse response) throws IOException {
+		List<IListUserDto> iListUserDtos = userRepository.getUsers(response, IListUserDto.class);
+		ExcelExportUtils exportUtils = new ExcelExportUtils(iListUserDtos);
+		exportUtils.exportDataToExcel(response);
+		return iListUserDtos;
 
 	}
 }
