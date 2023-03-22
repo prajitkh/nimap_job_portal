@@ -34,7 +34,9 @@ ARG JAR_FILE=/home/app/target/job_portal-0.0.1-SNAPSHOT.jar
 #Get argument variable from docker-compose file
 
 
-
+RUN apk update && \
+    apk add --no-cache fontconfig ttf-dejavu && \
+    rm -rf /var/cache/apk/*
 WORKDIR /opt/app
 
 COPY --from=build /home/app/src/main/resources/application*.properties /opt/app/src/main/resources/
