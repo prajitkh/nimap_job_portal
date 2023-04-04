@@ -2,7 +2,7 @@
 FROM maven:3.8.1 AS build
 
 WORKDIR /home/app
-
+	
 COPY src /home/app/src
 
 COPY src/main/resources/application*.properties /home/app/src/main/resources/

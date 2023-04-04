@@ -28,7 +28,7 @@ public class JobController {
 	@Autowired
 	private JobInterface jobInterface;
 
-	@PreAuthorize("hasRole('addJobs')")
+	// @PreAuthorize("hasRole('addJobs')")
 	@PostMapping()
 	public ResponseEntity<?> addJobs(@RequestAttribute(CommanFuncation.CUSTUM_ATTRIBUTE_USER_ID) Long id,
 			@RequestBody JobDto jobDto) {

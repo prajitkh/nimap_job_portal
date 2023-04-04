@@ -6,8 +6,7 @@ import java.util.Calendar;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jobportal.JobportalApplication;
 import com.jobportal.dto.AuthResponceDto;
 import com.jobportal.dto.EmailOtpDto;
 import com.jobportal.dto.ErrorResponseDto;
@@ -39,7 +39,7 @@ import com.jobportal.utils.PasswordValidator;
 
 @RestController
 public class AuthController {
-	private static final Logger LOG = LoggerFactory.getLogger(AuthController.class);
+	private static final Logger log = Logger.getLogger(JobportalApplication.class);
 
 	@Autowired
 	private JwtTokenUtilInterface jwtTokenUtilInterface;
@@ -63,20 +63,23 @@ public class AuthController {
 		System.err.println("**********************register******************************");
 		String email = userDto.getEmail();
 		String password = userDto.getPassword();
-
+		log.info("Check email");
 		if (PasswordValidator.isValidforEmail(email)) {
-
+			log.info("Check password");
 			if (PasswordValidator.isValid(password)) {
 
 				UserEntity databaseName = authRepository.findByEmailContainingIgnoreCase(email);
-
+				log.info("Check user already register or not");
 				if (databaseName == null) {
+					log.info("User is not already register");
 
 					authInterface.AddUser(userDto);
+					log.info("User create OK !!!");
 
 					return new ResponseEntity<>(new SuccessResponseDto("User created", "userCreated", "Data added"),
 							HttpStatus.CREATED);
 				} else {
+					log.info("user alreday present");
 					return new ResponseEntity<>(
 							new ErrorResponseDto("User email id already exist", "userEmailIdAlreadyExist"),
 							HttpStatus.BAD_REQUEST);
@@ -102,8 +105,10 @@ public class AuthController {
 	public ResponseEntity<?> createAuthenticationToken(@Valid @RequestBody JwtRequest createAuthenticationToken)
 			throws Exception {
 		try {
+
 			System.err.println("Login request ***********************************************");
 			UserEntity user = authRepository.findByEmailContainingIgnoreCase(createAuthenticationToken.getEmail());
+			log.debug("register user");
 
 			if (this.authInterface.comparePassword(createAuthenticationToken.getPassword(), user.getPassword())) {
 				final UserDetails userDetails = this.authInterface
@@ -133,11 +138,16 @@ public class AuthController {
 						HttpStatus.OK); // permission add
 
 			} else {
+
+				log.debug("invalid password" + createAuthenticationToken.getPassword());
+				log.info("invalid password" + createAuthenticationToken.getPassword());
+				log.warn("invalid password" + createAuthenticationToken.getPassword());
 				return new ResponseEntity<>(new ErrorResponseDto("Invalid password", "Please enter valid password"),
 						HttpStatus.BAD_REQUEST);
 
 			}
 		} catch (Exception e) {
+			log.debug("else condition" + e.getMessage());
 
 			return new ResponseEntity<>(
 					new ErrorResponseDto("Invalid email or Password", "Please enter valid email or password"),
