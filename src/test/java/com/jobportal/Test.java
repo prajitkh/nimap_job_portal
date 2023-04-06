@@ -1,22 +1,34 @@
 package com.jobportal;
 
-import static org.junit.Assert.assertArrayEquals;
-
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+
+import com.jobportal.repositories.UserRepository;
+import com.jobportal.serviceImpl.UserServiceImpl;
 
 public class Test {
+	@Mock
+	private UserRepository userRepository;
+
+	@InjectMocks
+	private UserServiceImpl userService;
+
 	@org.junit.jupiter.api.Test
 	@DisplayName("Testing testMethod ....")
 	public void testMethod() {
 		System.out.println("run ");
 
-		assertArrayEquals("", "");
 	}
 
-	@BeforeEach
-	@DisplayName("Testing setUp ....")
-	public void setUp() {
-		System.out.println("Set up");
-	}
+//	@org.junit.jupiter.api.Test
+//	@DisplayName("Testing setUp ....")
+//	public void setUp() {
+//		String expect = "HELLO";
+//		String actual = "HELLO";
+//		System.out.println("Set up");
+//
+//		Assertions.assertEquals(expect, actual);
+//	}
+
 }
