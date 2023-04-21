@@ -1,3 +1,4 @@
+
 # Set the root logger level to INFO and specify the appender
 log4j.rootLogger=DEBUG,myfile,console
 
@@ -9,7 +10,7 @@ log4j.appender.console.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p %c{
 
 # Specify the file appender
 log4j.appender.myfile=org.apache.log4j.FileAppender
-log4j.appender.myfile.File=C:/LogFile/one.log
+log4j.appender.myfile.File=C:/Payroll_task/nimap_job_portal/logfile.one
 log4j.appender.myfile.MaxFileSize=10MB
 log4j.appender.myfile.MaxBackupIndex=5
 log4j.appender.myfile.layout=org.apache.log4j.PatternLayout

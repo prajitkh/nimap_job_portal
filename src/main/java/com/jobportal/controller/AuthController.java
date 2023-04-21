@@ -64,6 +64,7 @@ public class AuthController {
 		String email = userDto.getEmail();
 		String password = userDto.getPassword();
 		log.info("Check email");
+
 		if (PasswordValidator.isValidforEmail(email)) {
 			log.info("Check password");
 			if (PasswordValidator.isValid(password)) {

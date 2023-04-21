@@ -1,0 +1,15 @@
+2023-04-20 13:01:57 INFO  JobportalApplication:13 - Hello
+2023-04-20 13:02:11 INFO  JobportalApplication:66 - Check email
+2023-04-20 13:02:11 INFO  JobportalApplication:69 - Check password
+2023-04-20 13:02:11 INFO  JobportalApplication:73 - Check user already register or not
+2023-04-20 13:02:11 INFO  JobportalApplication:83 - user alreday present
+2023-04-20 13:03:36 INFO  JobportalApplication:13 - Hello
+2023-04-20 13:03:47 INFO  JobportalApplication:13 - Hello
+2023-04-20 13:04:31 INFO  JobportalApplication:66 - Check email
+2023-04-20 13:04:31 INFO  JobportalApplication:69 - Check password
+2023-04-20 13:04:31 INFO  JobportalApplication:73 - Check user already register or not
+2023-04-20 13:04:31 INFO  JobportalApplication:83 - user alreday present
+2023-04-20 13:04:50 INFO  JobportalApplication:66 - Check email
+2023-04-20 13:04:50 INFO  JobportalApplication:69 - Check password
+2023-04-20 13:04:50 INFO  JobportalApplication:73 - Check user already register or not
+2023-04-20 13:04:50 INFO  JobportalApplication:83 - user alreday present
