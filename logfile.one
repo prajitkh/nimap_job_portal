@@ -13,3 +13,16 @@
 2023-04-20 13:04:50 INFO  JobportalApplication:69 - Check password
 2023-04-20 13:04:50 INFO  JobportalApplication:73 - Check user already register or not
 2023-04-20 13:04:50 INFO  JobportalApplication:83 - user alreday present
+2023-04-24 17:21:57 INFO  JobportalApplication:13 - Hello
+2023-04-24 17:22:58 DEBUG JobportalApplication:112 - register user
+2023-04-24 17:22:58 DEBUG JobportalApplication:151 - else conditionCannot invoke "com.jobportal.entity.UserEntity.getPassword()" because "user" is null
+2023-04-24 17:23:03 DEBUG JobportalApplication:112 - register user
+2023-04-24 17:23:03 DEBUG JobportalApplication:151 - else conditionCannot invoke "com.jobportal.entity.UserEntity.getPassword()" because "user" is null
+2023-04-24 17:23:14 INFO  JobportalApplication:66 - Check email
+2023-04-24 17:23:14 INFO  JobportalApplication:69 - Check password
+2023-04-24 17:23:14 INFO  JobportalApplication:73 - Check user already register or not
+2023-04-24 17:23:14 INFO  JobportalApplication:75 - User is not already register
+2023-04-24 17:23:14 INFO  JobportalApplication:78 - User create OK !!!
+2023-04-24 17:23:18 DEBUG JobportalApplication:112 - register user
+2023-04-24 17:23:19 DEBUG JobportalApplication:151 - else conditionUnable to connect to Redis; nested exception is io.lettuce.core.RedisConnectionException: Unable to connect to 127.0.0.1/<unresolved>:6379
+2023-04-24 17:28:30 DEBUG JobportalApplication:112 - register user

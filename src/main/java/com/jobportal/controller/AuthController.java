@@ -150,8 +150,7 @@ public class AuthController {
 		} catch (Exception e) {
 			log.debug("else condition" + e.getMessage());
 
-			return new ResponseEntity<>(
-					new ErrorResponseDto("Invalid email or Password", "Please enter valid email or password"),
+			return new ResponseEntity<>(new ErrorResponseDto(e.getMessage(), "Please enter valid email or password"),
 					HttpStatus.BAD_REQUEST);
 		}
 	}
