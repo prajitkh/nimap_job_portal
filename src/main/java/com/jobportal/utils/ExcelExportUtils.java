@@ -79,7 +79,7 @@ public class ExcelExportUtils {
 		// createCell(row, 5, "Level", style, true);
 //		createCell(row, 6, "Designation", style, true);
 //		createCell(row, 7, "Department", style, true);
-		createCell(row, 5, "CareerAspiration", style, true);
+//		createCell(row, 5, "CareerAspiration", style, true);
 	}
 
 	private void generateUsersData() {

@@ -45,7 +45,7 @@ public class UserController {
 		}
 	}
 
-	@PreAuthorize("hasRole('getAlLUsers')")
+	// @PreAuthorize("hasRole('getAlLUsers')")
 	@GetMapping
 	public ResponseEntity<?> getAlLUsers(@RequestParam(defaultValue = "") String search,
 			@RequestParam(defaultValue = "1") String PageNo, @RequestParam(defaultValue = "5") String PageSize) {
