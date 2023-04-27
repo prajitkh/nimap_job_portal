@@ -116,7 +116,7 @@ public class AuthServiceImpl implements AuthInterface, UserDetailsService {
 	private ArrayList<SimpleGrantedAuthority> getAuthority(UserEntity user) {
 
 		ArrayList<SimpleGrantedAuthority> authorities = new ArrayList<>();
-		ArrayList<String> permissions = this.rolePermissionInterface.getPermissionByUserId(user.getId());
+		ArrayList<String> permissions = this.getUserPermission(user.getId());
 		permissions.forEach(e -> {
 			authorities.add(new SimpleGrantedAuthority("ROLE_" + e));
 
