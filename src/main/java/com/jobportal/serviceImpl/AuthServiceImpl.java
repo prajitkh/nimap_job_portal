@@ -1,7 +1,6 @@
 package com.jobportal.serviceImpl;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jobportal.dto.EmailOtpDto;
 import com.jobportal.dto.ForgotPasswordConfirmDto;
 import com.jobportal.dto.UserDto;
@@ -46,25 +44,25 @@ public class AuthServiceImpl implements AuthInterface, UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String email) {
 		UserEntity userEntity = new UserEntity();
-		if (!cache.isKeyExist(email, email)) {
-			userEntity = this.authRepository.findByEmailContainingIgnoreCase(email);
-
-			cache.addInCache(email, email, userEntity.toString());
-		} else {
-			System.out.println("JSON STRING " + cache.getFromCache(email, email));
-			String jsonString = (String) cache.getFromCache(email, email);
-			try {
-				ObjectMapper mapper = new ObjectMapper();
-				Map<String, Object> map = mapper.readValue(jsonString, Map.class);
-				System.out.println(map.toString());
-				userEntity.setPassword((String) map.get("password"));
-				userEntity.setEmail((String) map.get("email"));
-				userEntity.setId(((Integer) map.get("id")).longValue());
-			} catch (Exception e) {
-				System.out.println("EEOR " + e);
-			}
-			System.out.println("JSON STRING 22 " + userEntity.toString());
-		}
+//		if (!cache.isKeyExist(email, email)) {
+		userEntity = this.authRepository.findByEmailContainingIgnoreCase(email);
+//
+//			cache.addInCache(email, email, userEntity.toString());
+//		} else {
+//			System.out.println("JSON STRING " + cache.getFromCache(email, email));
+//			String jsonString = (String) cache.getFromCache(email, email);
+//			try {
+//				ObjectMapper mapper = new ObjectMapper();
+//				Map<String, Object> map = mapper.readValue(jsonString, Map.class);
+//				System.out.println(map.toString());
+//				userEntity.setPassword((String) map.get("password"));
+//				userEntity.setEmail((String) map.get("email"));
+//				userEntity.setId(((Integer) map.get("id")).longValue());
+//			} catch (Exception e) {
+//				System.out.println("EEOR " + e);
+//			}
+//			System.out.println("JSON STRING 22 " + userEntity.toString());
+//		}
 		if (userEntity.getEmail().isEmpty()) {
 			throw new ResourceNotFoundException("User OR Password not found");
 		}
@@ -116,7 +114,7 @@ public class AuthServiceImpl implements AuthInterface, UserDetailsService {
 	private ArrayList<SimpleGrantedAuthority> getAuthority(UserEntity user) {
 
 		ArrayList<SimpleGrantedAuthority> authorities = new ArrayList<>();
-		ArrayList<String> permissions = this.getUserPermission(user.getId());
+		ArrayList<String> permissions = this.rolePermissionInterface.getPermissionByUserId(user.getId());
 		permissions.forEach(e -> {
 			authorities.add(new SimpleGrantedAuthority("ROLE_" + e));
 
