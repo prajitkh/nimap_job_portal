@@ -26,17 +26,17 @@ services:
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: root
 
-  redis:
-    container_name: "redis_job_portal"
-    restart: always
-    command: redis-server
-    sysctls:
-      - net.core.somaxconn=65535
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-    image: redis:latest
-    ports:
-      - 6379:6379
+#  redis:
+#    container_name: "redis_job_portal"
+#    restart: always
+#    command: redis-server
+#    sysctls:
+#      - net.core.somaxconn=65535
+#    volumes:
+#      - /etc/localtime:/etc/localtime:ro
+#    image: redis:latest
+#    ports:
+#      - 6379:6379
 
 volumes:
   postgres-data:
