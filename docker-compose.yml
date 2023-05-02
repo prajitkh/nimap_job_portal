@@ -22,10 +22,11 @@ services:
     depends_on:
       - postgres
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5050/jobportal
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/jobportal
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: root
-
+      volumes:
+      - job_portal-db:/var/lib/postgresql/data
 #  redis:
 #    container_name: "redis_job_portal"
 #    restart: always
