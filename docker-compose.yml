@@ -1,33 +1,49 @@
-version: '3.8'
-
-service:
-   postgres :
-    images: postgres:latest
-    container_name: job_db
+version: '3.8.1'
+services:
+  postgres:
+    image: postgres:latest
+    container_name: my_postgres_container
     restart: always
-    enviroment:
-     POSTGRES_USER: postgres
-     POSTGRES_PASSWORD: root
-     POSTGRES_DB: jobportal
-     ports:
-       -"5050:5432"
-     volumes: 
-       - postgres-data:/var/lib/postgresql/data
-       
-     application:
-     build :
-     container_name: job_portal_Application
-     ports : 
-        - "8081:9002"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: jobportal
+    ports:
+      - "5050:5432"
+    volumes: 
+      - postgres-data:/var/lib/postgresql/data
+      
+      
+  app:
+    build: .
+    container_name: my_app_container
+    ports:
+      - "8081:9002"
     depends_on:
-        - postgres
+      - postgres
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/jobportal
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: root
-       
-      
-      
-    
 
- 
+#  redis:
+#    container_name: "redis_job_portal"
+#    restart: always
+#    command: redis-server
+#    sysctls:
+#      - net.core.somaxconn=65535
+#    volumes:
+#      - /etc/localtime:/etc/localtime:ro
+#    image: redis:latest
+#    ports:
+#      - 6379:6379
+
+volumes:
+  postgres-data:
+
+
+
+
+
+
+
