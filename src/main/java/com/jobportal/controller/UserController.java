@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.jobportal.configuration.KafkaProducer;
 import com.jobportal.dto.ErrorResponseDto;
 import com.jobportal.dto.IListUserDto;
 import com.jobportal.dto.SuccessResponseDto;
@@ -31,6 +32,8 @@ import com.jobportal.serviceInterface.UserInterface;
 public class UserController {
 	@Autowired
 	private UserInterface userInterface;
+	@Autowired
+	private KafkaProducer kafkaProducer;
 
 	@PatchMapping("/{id}")
 	public ResponseEntity<?> upddateUserInformation(@RequestBody UserPersonalInfoDto personalInfoDto,
@@ -91,4 +94,15 @@ public class UserController {
 		userInterface.exportUserToExcel(response);
 	}
 
+	@PostMapping("/kafka")
+	public ResponseEntity<?> uploadUser(@RequestBody String request) {
+		try {
+			kafkaProducer.addUsersToUsersMainTable(request);
+			return new ResponseEntity<>(new SuccessResponseDto("User uplaod succefully", "o"), HttpStatus.OK);
+
+		} catch (Exception e) {
+			return new ResponseEntity<>(new ErrorResponseDto(e.getMessage(), "Please enter valid inforamtion"),
+					HttpStatus.BAD_REQUEST);
+		}
+	}
 }
