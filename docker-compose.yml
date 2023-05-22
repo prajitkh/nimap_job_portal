@@ -29,7 +29,7 @@ services:
   zookeeper:
     image: wurstmeister/zookeeper
     environment:
-      ZOOKEEPER_CLIENT_PORT: 9514
+      ZOOKEEPER_CLIENT_PORT: 9092
       
   kafka:
     image: wurstmeister/kafka
