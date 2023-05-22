@@ -26,21 +26,21 @@ services:
       SPRING_DATASOURCE_PASSWORD: root
 
        
-  zookeeper:
+    zookeeper:
     image: wurstmeister/zookeeper
     environment:
-      ZOOKEEPER_CLIENT_PORT: 9092
+      ZOOKEEPER_CLIENT_PORT: 2181
       
   kafka:
     image: wurstmeister/kafka
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ADVERTISED_HOST_NAME: kafka
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:9092
-      KAFKA_AUTO_CRREATE_TOPICS_ENABLE: "true"
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
       KAFKA_CREATE_TOPICS: "userBulk"
-     # KAFKA_CFG_ZOOKEEPER_CONNECTION_TIMEOUT_MS: 300000
-  
           
 volumes:
   postgres-data:
