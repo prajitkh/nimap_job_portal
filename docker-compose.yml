@@ -25,6 +25,7 @@ services:
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: root
 
+       
   zookeeper:
     image: wurstmeister/zookeeper
     environment:
@@ -40,15 +41,7 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
       KAFKA_CREATE_TOPICS: "userBulk"
-
-  producer:
-    build:
-      context: ./path/to/producer
-      dockerfile: Dockerfile
-    container_name: my_producer_container
-    depends_on:
-      - kafka
-
-
+  
+          
 volumes:
   postgres-data:
