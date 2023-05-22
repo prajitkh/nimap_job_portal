@@ -35,7 +35,7 @@ services:
     image: wurstmeister/kafka
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_ADVERTISED_HOST_NAME: 5.189.191.68
+      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:9514
       KAFKA_AUTO_CRREATE_TOPICS_ENABLE: "true"
       KAFKA_CREATE_TOPICS: "userBulk"
