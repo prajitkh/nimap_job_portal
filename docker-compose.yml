@@ -49,8 +49,6 @@ services:
     depends_on:
       - kafka
 
-    environment:
-      - VARIABLE_NAME_1=value1
-      - VARIABLE_NAME_2=value2
+
 volumes:
   postgres-data:
