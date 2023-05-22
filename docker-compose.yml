@@ -48,8 +48,9 @@ services:
     container_name: my_producer_container
     depends_on:
       - kafka
-    environment:
-      # Add any necessary environment variables for the producer application
 
+    environment:
+      - VARIABLE_NAME_1=value1
+      - VARIABLE_NAME_2=value2
 volumes:
   postgres-data:
