@@ -35,19 +35,13 @@ services:
     image: bitnami/kafka
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
+      KAFKA_ADVERTISED_HOST_NAME: localhost:9092
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
       KAFKA_CREATE_TOPICS: "userBulk"
       
-  connect:
-    image: confluentinc/cp-kafka-connect:latest
-    hostname: connect
-    container_name: connect
-    depends_on:
-      - zookeeper
-      - kafka
+
 volumes:
   postgres-data:
