@@ -48,6 +48,6 @@ services:
     container_name: connect
     depends_on:
       - zookeeper
-      - broker
+      - kafka
 volumes:
   postgres-data:
