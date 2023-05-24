@@ -37,7 +37,7 @@ services:
    container_name: kafka
    ports:
      - "9092:9092"
-  environment:
+   environment:
      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
      - KAFKA_AUTO_CREATE_TOPICS_ENABLE=true
      - KAFKA_CREATE_TOPICS=userBulk
