@@ -50,3 +50,4 @@ services:
 
 volumes:
   postgres-data:
+  job_portal-kafka:
