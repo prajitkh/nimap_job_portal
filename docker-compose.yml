@@ -27,20 +27,25 @@ services:
       SPRING_DATASOURCE_PASSWORD: root
 
   zookeeper:
-    image: wurstmeister/zookeeper
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
+     image: wurstmeister/zookeeper
+     ports:
+       - "2181:2181"
 
   kafka:
-    image: wurstmeister/kafka
-    environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
-      KAFKA_CREATE_TOPICS: "userBulk"
+     image: wurstmeister/kafka
+     ports:
+       - "9092:9092"
+     environment:
+       KAFKA_BROKER_ID: 1
+       KAFKA_ADVERTISED_HOST_NAME: localhost
+       KAFKA_ZOOKEEPER_CONNECT: zookeeper:9514
+       KAFKA_AUTO_CRREATE_TOPICS_ENABLE: true
+       KAFKA_CREATE_TOPICS: "userBulk:1:1"
+      # KAFKA_CREATE_TOPICS: "topicBulk:1:1"
+       KAFKA_CFG_ZOOKEEPER_CONNECTION_TIMEOUT_MS: 300000
+     volumes:
+       - ntts-kafka:/var/run/docker.sock
+
 
 
 volumes:
