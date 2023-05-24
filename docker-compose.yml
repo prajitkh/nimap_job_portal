@@ -44,7 +44,7 @@ services:
       # KAFKA_CREATE_TOPICS: "topicBulk:1:1"
        KAFKA_CFG_ZOOKEEPER_CONNECTION_TIMEOUT_MS: 300000
      volumes:
-       - ntts-kafka:/var/run/docker.sock
+       - job_portal-kafka:/var/run/docker.sock
 
 
 
