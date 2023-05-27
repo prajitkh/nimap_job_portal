@@ -30,8 +30,7 @@ services:
     ports:
       - '50000:2181'
     image: zookeeper:3.5.9
-    depends_on:
-      - zookeeper
+   
     environment:
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       KAFKA_LISTENERS: 'INTERNAL://:9092'
