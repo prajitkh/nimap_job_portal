@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class KafkaProducer {
 
-	public static final String USER = "userBulk:1:1";
+	public static final String USER = "userBulk";
 	private static Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);
 
 	@Autowired
