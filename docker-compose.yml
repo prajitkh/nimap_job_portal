@@ -48,24 +48,7 @@ services:
     image: 'wurstmeister/kafka:2.13-2.8.1'
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
-  publisher:
-    depends_on:
-      - kafka
-    environment:
-      TOPIC: userBulk
-      ENVIRONMENT: local
-      INTERNAL_KAFKA_ADDR: 'kafka:9092'
-    build:
-      context: ./publisher
-  subscriber:
-    depends_on:
-      - kafka
-    environment:
-      TOPIC: example-topic
-      ENVIRONMENT: local
-      INTERNAL_KAFKA_ADDR: 'kafka:9092'
-    build:
-      context: ./subscriber
+  
 
 
 volumes:
