@@ -18,7 +18,7 @@ services:
     build: .
     container_name: my_producer_app_container
     ports:
-      - "8081:9002"
+      - "8081:9092"
     depends_on:
       - postgres
     environment:
@@ -30,15 +30,23 @@ services:
     image: wurstmeister/zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
-      
+      ZOOKEEPER_TICK_TIME: 2000
   kafka:
     image: wurstmeister/kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - 9092:9092
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ADVERTISED_HOST_NAME: localhost
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_AUTO_CRREATE_TOPICS_ENABLE: "true"
       KAFKA_CREATE_TOPICS: "userBulk:1:1"
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     #  KAFKA_CREATE_TOPICS: "topicBulk:1:1"
       KAFKA_CFG_ZOOKEEPER_CONNECTION_TIMEOUT_MS: 300000
     volumes:
