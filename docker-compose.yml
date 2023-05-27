@@ -46,10 +46,7 @@ services:
       KAFKA_CREATE_TOPICS: 'userBulk:1:1'
       KAFKA_ADVERTISED_HOST_NAME: 172.17.0.1 # change to 172.17.0.1 if running on Ubuntu
     image: 'wurstmeister/kafka:2.13-2.8.1'
-    volumes:
-      job_portal-kafka - '/var/run/docker.sock:/var/run/docker.sock'
- 
+  
 
 volumes:
   postgres-data:
-  job_portal-kafka:
