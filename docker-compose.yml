@@ -47,6 +47,6 @@ volumes:
   postgres-data:
 networks:
   some-net:
-   driver: bridge
+  driver: bridge
 
   
