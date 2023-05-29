@@ -39,11 +39,8 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181 
       KAFKA_AUTO_CRREATE_TOPICS_ENABLE: 'true'
       KAFKA_CREATE_TOPICS: "userBulk:1:1"
-    networks:
-      - my-network
+   
 volumes:
   postgres-data:
-  
-networks:
-  my-network:
+
   
