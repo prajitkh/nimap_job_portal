@@ -13,7 +13,8 @@ services:
       - "5050:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
-
+   
+    
   app:
     build: .
     container_name: my_producer_app_container
@@ -25,7 +26,8 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://my_producer_postgres_container:5432/jobportal
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: root
-  
+    networks:
+      - my-network
   zookeeper:
     image: wurstmeister/zookeeper
     ports:
@@ -42,8 +44,7 @@ services:
       KAFKA_AUTO_CRREATE_TOPICS_ENABLE: 'true'
       KAFKA_CREATE_TOPICS: "userBulk:1:1"
       
-  networks:
-      - my-network
+ 
   
 volumes:
   postgres-data:
