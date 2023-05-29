@@ -3,7 +3,7 @@ version: "3.9"
 services:
   postgres:
     image: postgres:latest
-    container_name: my_producer_postgres_container1
+    container_name: my_producer_postgres_container
     restart: always
     environment:
       POSTGRES_USER: postgres
@@ -16,7 +16,7 @@ services:
 
   app:
     build: .
-    container_name: my_producer_app_container1
+    container_name: my_producer_app_container
     ports:
       - "8082:9008"
     depends_on:
