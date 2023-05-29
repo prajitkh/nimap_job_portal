@@ -20,7 +20,7 @@ services:
     build: .
     container_name: my_producer_app_container1
     ports:
-      - "8082:9008"
+      - "8082:9002"
     depends_on:
       - postgres
     environment:
