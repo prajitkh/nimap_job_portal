@@ -23,12 +23,14 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://my_producer_postgres_container:5432/jobportal
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: root
-  
+    networks:
+     - my-network
   zookeeper:
     image: wurstmeister/zookeeper
     ports:
      - "2181:2181"
-     
+    networks:
+     - my-network 
   kafka:
     image: wurstmeister/kafka
     ports:
@@ -39,8 +41,11 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181 
       KAFKA_AUTO_CRREATE_TOPICS_ENABLE: 'true'
       KAFKA_CREATE_TOPICS: "userBulk:1:1"
-   
+    networks:
+      - my-network
 volumes:
   postgres-data:
-
+  
+networks:
+  my-network:
   
