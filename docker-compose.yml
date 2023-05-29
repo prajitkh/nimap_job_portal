@@ -3,23 +3,22 @@ version: "3.9"
 services:
   postgres:
     image: postgres:latest
-    container_name: my_producer_postgres_container
+    container_name: my_producer_postgres_container1
     restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root
       POSTGRES_DB: jobportal
     ports:
-      - "5050:5432"
+      - "5054:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
-   
-    
+
   app:
     build: .
-    container_name: my_producer_app_container
+    container_name: my_producer_app_container1
     ports:
-      - "8081:9002"
+      - "8082:9008"
     depends_on:
       - postgres
     environment:
@@ -28,23 +27,26 @@ services:
       SPRING_DATASOURCE_PASSWORD: root
     networks:
       - my-network
+
   zookeeper:
-    image: wurstmeister/zookeeper
-    ports:
-     - "2181:2181"
-     
+   image: wurstmeister/zookeeper
+   container_name: zookeeper1
+   ports:
+     - "2182:2182"
+  
   kafka:
     image: wurstmeister/kafka
     ports:
-      - "9092:9092"
+       - "9094:9094" 
     environment:
-      #KAFKA_BROKER_ID: ${KAFKA_BROKER_ID}
-      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181 
-      KAFKA_AUTO_CRREATE_TOPICS_ENABLE: 'true'
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper1:2182
       KAFKA_CREATE_TOPICS: "userBulk:1:1"
-      
- 
-  
+    networks:
+      - my-network
+
 volumes:
   postgres-data:
+
+networks:
+  my-network:
