@@ -41,8 +41,9 @@ services:
   kafka:
     image: wurstmeister/kafka
     ports:
-      - "9094:9094" 
+      - "9093:9094" 
     environment:
+      BOOTSTRAP_SERVERS: 172.21.0.1:9093
       KAFKA_ADVERTISED_HOST_NAME: localhost
       KAFKA_ZOOKEEPER_CONNECT: zookeeper1:2181 
       KAFKA_CREATE_TOPICS: "userBulk:1:1"
